@@ -1,0 +1,172 @@
+.sidebar {
+  min-height: calc(100vh - 20px);
+  border-radius: 10px;
+  background: #fffdfb;
+  padding: 30px 30px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 18px 42px rgba(65, 48, 34, 0.08);
+}
+
+.brand {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 58px;
+}
+
+.brandMark {
+  width: 54px;
+  height: 54px;
+  border: 1.5px solid #63d62e;
+  border-radius: 50%;
+  padding: 9px;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.92;
+  color: #f78a16;
+  text-transform: uppercase;
+}
+
+.brandName {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.brandSub {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.navItem {
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: 26px 1fr 18px;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0 12px;
+  color: #101015;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.navItem svg {
+  width: 23px;
+  height: 23px;
+  color: #5abd3c;
+  stroke-width: 2;
+}
+
+.active {
+  background: #5abd3c;
+  color: #ffffff;
+}
+
+.active svg {
+  color: #ffffff;
+}
+
+.chevron {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid #5abd3c;
+  border-bottom: 2px solid #5abd3c;
+  transform: rotate(45deg) translateY(-3px);
+  justify-self: end;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(225deg) translate(-2px, -1px);
+}
+
+.active .chevron {
+  border-color: #ffffff;
+}
+
+.subMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 38px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(90, 189, 60, 0.28);
+}
+
+.subItem {
+  min-height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #50565d;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.subItem:hover {
+  background: #ecf9ee;
+  color: #3f9d28;
+}
+
+.subItemActive {
+  background: #ecf9ee;
+  color: #3f9d28;
+}
+
+.logout {
+  margin-top: auto;
+  min-height: 38px;
+  border: 1px solid rgba(78, 220, 31, 0.28);
+  border-radius: 10px;
+  background: #ecf9ee;
+  color: #5abd3c;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .brand {
+    margin-bottom: 20px;
+  }
+
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .subMenu {
+    margin-left: 12px;
+  }
+}

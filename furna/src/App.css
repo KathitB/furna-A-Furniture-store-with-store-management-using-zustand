@@ -1,0 +1,6 @@
+.mainApp {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* gap: clamp(18px, 4vh, 32px); */
+}

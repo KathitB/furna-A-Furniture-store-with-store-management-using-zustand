@@ -1,0 +1,27 @@
+.dashboardPage {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 26px;
+  padding: 10px 18px;
+  background: #f4efea;
+  color: #1b1b1f;
+  overflow: hidden;
+}
+
+.content {
+  min-height: 0;
+  padding: 34px 22px;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .dashboardPage {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .content {
+    padding: 18px 8px 28px;
+  }
+}
