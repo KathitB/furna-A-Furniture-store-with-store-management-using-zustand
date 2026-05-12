@@ -1,47 +1,60 @@
 import { useMemo, useState } from "react";
-import backgroundBanner from "../../assets/background.jpeg";
-import heroBanner from "../../assets/hero.png";
-import storeBanner from "../../assets/banner_image.jpeg";
+import { useBannerStore } from "../store/bannerStore";
 import PageShell from "./PageShell";
 import styles from "./Banners.module.scss";
 
-const bannerRows = [
-  [storeBanner, "Summer Furniture Sale", "Ahmedabad", "Active"],
-  [heroBanner, "Premium Sofa Collection", "Surat", "Active"],
-  [backgroundBanner, "Bedroom Makeover Week", "Vadodara", "Inactive"],
-  [storeBanner, "Dining Festive Offers", "Rajkot", "Active"],
-  [heroBanner, "Office Comfort Deals", "Mumbai", "Active"],
-  [backgroundBanner, "Outdoor Living Specials", "Pune", "Inactive"],
-  [storeBanner, "Storage Essentials", "Delhi", "Active"],
-  [heroBanner, "Luxury Home Collection", "Bengaluru", "Active"],
-  [backgroundBanner, "Compact Home Picks", "Hyderabad", "Inactive"],
-  [storeBanner, "Weekend Recliner Deals", "Chennai", "Active"],
-  [heroBanner, "Modern Decor Launch", "Jaipur", "Active"],
-  [backgroundBanner, "Mattress Upgrade Offer", "Kolkata", "Inactive"],
-].map(([banner, title, branch, status], index) => ({
-  srNo: index + 1,
-  // bannerId: `BNR-${String(index + 1).padStart(3, "0")}`,
-  banner,
-  title,
-  branch,
-  status,
-}));
-
 const pageSizeOptions = [10, 20, 30];
 
+const bannerInitialValues = {
+  banner: "",
+  title: "",
+  branch: "",
+  status: "Active",
+};
+
 export default function Banners({ user }) {
+  const bannerRows = useBannerStore((state) => state.banners);
+  const addBanner = useBannerStore((state) => state.addBanner);
+  const toggleBannerStatus = useBannerStore(
+    (state) => state.toggleBannerStatus,
+  );
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bannerForm, setBannerForm] = useState(bannerInitialValues);
   const totalPages = Math.ceil(bannerRows.length / pageSize);
+  const activeBanners = bannerRows.filter(
+    (banner) => banner.status === "Active",
+  ).length;
+  const inactiveBanners = bannerRows.filter(
+    (banner) => banner.status === "Inactive",
+  ).length;
   const startIndex = (currentPage - 1) * pageSize;
   const visibleRows = useMemo(
     () => bannerRows.slice(startIndex, startIndex + pageSize),
-    [pageSize, startIndex],
+    [bannerRows, pageSize, startIndex],
   );
 
   const handlePageSizeChange = (event) => {
     setPageSize(Number(event.target.value));
     setCurrentPage(1);
+  };
+
+  const handleBannerFormChange = (event) => {
+    const { name, value } = event.target;
+    setBannerForm((form) => ({ ...form, [name]: value }));
+  };
+
+  const handleAddBanner = (event) => {
+    event.preventDefault();
+
+    if (!bannerForm.title.trim() || !bannerForm.branch.trim()) {
+      return;
+    }
+
+    addBanner(bannerForm);
+    setBannerForm(bannerInitialValues);
+    setIsModalOpen(false);
   };
 
   return (
@@ -51,26 +64,31 @@ export default function Banners({ user }) {
         title="Manage store banners"
         userName={user?.name}
         stats={[
-          ["Live Banners", "8"],
-          ["Scheduled", "2"],
-          ["Drafts", "2"],
+          ["Live Banners", activeBanners],
+          ["Inactive", inactiveBanners],
+          ["Total Banners", bannerRows.length],
         ]}
       />
 
       <section className={styles.tablePanel}>
         <div className={styles.tableToolbar}>
           <h2>Banner Records</h2>
-          <label>
-            Show
-            <select value={pageSize} onChange={handlePageSizeChange}>
-              {pageSizeOptions.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-            entries
-          </label>
+          <div className={styles.toolbarActions}>
+            <button type="button" onClick={() => setIsModalOpen(true)}>
+              Add Banner
+            </button>
+            <label>
+              Show
+              <select value={pageSize} onChange={handlePageSizeChange}>
+                {pageSizeOptions.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+              entries
+            </label>
+          </div>
         </div>
 
         <div className={styles.tableScroll}>
@@ -78,18 +96,19 @@ export default function Banners({ user }) {
             <thead>
               <tr>
                 <th>Sr. No</th>
-                {/* <th>Banner ID</th> */}
+                <th>Banner ID</th>
                 <th>Banner</th>
                 <th>Title</th>
                 <th>Branch</th>
                 <th>Banner Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {visibleRows.map((row) => (
                 <tr key={row.bannerId}>
                   <td>{row.srNo}</td>
-                  {/* <td>{row.bannerId}</td> */}
+                  <td>{row.bannerId}</td>
                   <td>
                     <img
                       className={styles.bannerImage}
@@ -107,6 +126,15 @@ export default function Banners({ user }) {
                     >
                       {row.status}
                     </span>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className={styles.actionButton}
+                      onClick={() => toggleBannerStatus(row.bannerId)}
+                    >
+                      Make {row.status === "Active" ? "Inactive" : "Active"}
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -144,6 +172,70 @@ export default function Banners({ user }) {
           </div>
         </div>
       </section>
+
+      {isModalOpen && (
+        <div className={styles.modalBackdrop} role="presentation">
+          <div className={styles.modal} role="dialog" aria-modal="true">
+            <form onSubmit={handleAddBanner}>
+              <div className={styles.modalHeader}>
+                <h2>Add Banner</h2>
+                <button type="button" onClick={() => setIsModalOpen(false)}>
+                  Close
+                </button>
+              </div>
+
+              <label>
+                Banner Image URL
+                <input
+                  name="banner"
+                  value={bannerForm.banner}
+                  onChange={handleBannerFormChange}
+                  placeholder="Optional"
+                />
+              </label>
+
+              <label>
+                Title
+                <input
+                  name="title"
+                  value={bannerForm.title}
+                  onChange={handleBannerFormChange}
+                  required
+                />
+              </label>
+
+              <label>
+                Branch
+                <input
+                  name="branch"
+                  value={bannerForm.branch}
+                  onChange={handleBannerFormChange}
+                  required
+                />
+              </label>
+
+              <label>
+                Status
+                <select
+                  name="status"
+                  value={bannerForm.status}
+                  onChange={handleBannerFormChange}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </label>
+
+              <div className={styles.modalActions}>
+                <button type="button" onClick={() => setIsModalOpen(false)}>
+                  Cancel
+                </button>
+                <button type="submit">Create Banner</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
