@@ -114,7 +114,7 @@ const menuItems = [
     ],
   },
   {
-    label: "Settings",
+    label: "Admin Management",
     icon: icons.users,
     children: [
       { label: "Categories", page: "categories" },
