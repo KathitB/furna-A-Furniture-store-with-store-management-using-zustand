@@ -105,12 +105,16 @@ const menuItems = [
   { label: "Payment History", page: "payment-history", icon: icons.sofa },
   {
     label: "Orders",
-    page: "orders",
+    // page: "orders",
     icon: icons.orders,
-    children: [{ label: "Cashback", page: "cashback" }],
+
+    children: [
+      { label: "Order List", page: "orders" },
+      { label: "Cashback", page: "cashback" },
+    ],
   },
   {
-    label: "Master",
+    label: "Settings",
     icon: icons.users,
     children: [
       { label: "Categories", page: "categories" },

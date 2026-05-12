@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 const paymentRows = [
   ["FRN-1001", "Oak Lounge Sofa", 1, 42999, 2500, "UPI"],
@@ -61,35 +62,149 @@ const paymentRows = [
 
 const orderRows = [
   ["ORD-5001", "Aarav Mehta", "Oak Lounge Sofa", "Home Delivery", "Pending"],
-  ["ORD-5002", "Isha Sharma", "Walnut Coffee Table", "Store Pickup", "Delivered"],
-  ["ORD-5003", "Kabir Singh", "Queen Storage Bed", "Home Delivery", "In Transit"],
-  ["ORD-5004", "Meera Nair", "Ergo Study Chair", "Express Delivery", "Processing"],
-  ["ORD-5005", "Rohan Patel", "Marble Dining Set", "Home Delivery", "Delivered"],
-  ["ORD-5006", "Ananya Rao", "Rattan Accent Chair", "Store Pickup", "Cancelled"],
+  [
+    "ORD-5002",
+    "Isha Sharma",
+    "Walnut Coffee Table",
+    "Store Pickup",
+    "Delivered",
+  ],
+  [
+    "ORD-5003",
+    "Kabir Singh",
+    "Queen Storage Bed",
+    "Home Delivery",
+    "In Transit",
+  ],
+  [
+    "ORD-5004",
+    "Meera Nair",
+    "Ergo Study Chair",
+    "Express Delivery",
+    "Processing",
+  ],
+  [
+    "ORD-5005",
+    "Rohan Patel",
+    "Marble Dining Set",
+    "Home Delivery",
+    "Delivered",
+  ],
+  [
+    "ORD-5006",
+    "Ananya Rao",
+    "Rattan Accent Chair",
+    "Store Pickup",
+    "Cancelled",
+  ],
   ["ORD-5007", "Vivaan Shah", "Teak Bookshelf", "Home Delivery", "Pending"],
-  ["ORD-5008", "Tara Kapoor", "Velvet Recliner", "Express Delivery", "In Transit"],
-  ["ORD-5009", "Neil Verma", "Glass Console Table", "Home Delivery", "Delivered"],
-  ["ORD-5010", "Diya Menon", "Four Door Wardrobe", "Home Delivery", "Processing"],
-  ["ORD-5011", "Arjun Reddy", "Fabric Sofa Cum Bed", "Express Delivery", "Pending"],
-  ["ORD-5012", "Kiara Joshi", "Round Dining Table", "Store Pickup", "Delivered"],
-  ["ORD-5013", "Reyansh Das", "Bedside Table Pair", "Home Delivery", "In Transit"],
+  [
+    "ORD-5008",
+    "Tara Kapoor",
+    "Velvet Recliner",
+    "Express Delivery",
+    "In Transit",
+  ],
+  [
+    "ORD-5009",
+    "Neil Verma",
+    "Glass Console Table",
+    "Home Delivery",
+    "Delivered",
+  ],
+  [
+    "ORD-5010",
+    "Diya Menon",
+    "Four Door Wardrobe",
+    "Home Delivery",
+    "Processing",
+  ],
+  [
+    "ORD-5011",
+    "Arjun Reddy",
+    "Fabric Sofa Cum Bed",
+    "Express Delivery",
+    "Pending",
+  ],
+  [
+    "ORD-5012",
+    "Kiara Joshi",
+    "Round Dining Table",
+    "Store Pickup",
+    "Delivered",
+  ],
+  [
+    "ORD-5013",
+    "Reyansh Das",
+    "Bedside Table Pair",
+    "Home Delivery",
+    "In Transit",
+  ],
   ["ORD-5014", "Saanvi Jain", "Luxury TV Unit", "Home Delivery", "Processing"],
   ["ORD-5015", "Aditya Bose", "Compact Shoe Rack", "Store Pickup", "Delivered"],
   ["ORD-5016", "Myra Iyer", "Rocking Chair", "Express Delivery", "Pending"],
-  ["ORD-5017", "Krish Malhotra", "Outdoor Patio Set", "Home Delivery", "In Transit"],
-  ["ORD-5018", "Aanya Kulkarni", "Kids Study Desk", "Home Delivery", "Delivered"],
-  ["ORD-5019", "Yash Gupta", "Premium Mattress", "Express Delivery", "Processing"],
+  [
+    "ORD-5017",
+    "Krish Malhotra",
+    "Outdoor Patio Set",
+    "Home Delivery",
+    "In Transit",
+  ],
+  [
+    "ORD-5018",
+    "Aanya Kulkarni",
+    "Kids Study Desk",
+    "Home Delivery",
+    "Delivered",
+  ],
+  [
+    "ORD-5019",
+    "Yash Gupta",
+    "Premium Mattress",
+    "Express Delivery",
+    "Processing",
+  ],
   ["ORD-5020", "Sara Khan", "Kitchen Bar Stool", "Store Pickup", "Cancelled"],
   ["ORD-5021", "Dev Chawla", "Leather Ottoman", "Home Delivery", "Delivered"],
   ["ORD-5022", "Naina Roy", "Modern Sideboard", "Express Delivery", "Pending"],
-  ["ORD-5023", "Om Prakash", "Foldable Dining Chair", "Home Delivery", "Processing"],
+  [
+    "ORD-5023",
+    "Om Prakash",
+    "Foldable Dining Chair",
+    "Home Delivery",
+    "Processing",
+  ],
   ["ORD-5024", "Avni Bhat", "Panel Headboard", "Store Pickup", "Delivered"],
-  ["ORD-5025", "Aryan Sethi", "L Shape Sectional", "Home Delivery", "In Transit"],
+  [
+    "ORD-5025",
+    "Aryan Sethi",
+    "L Shape Sectional",
+    "Home Delivery",
+    "In Transit",
+  ],
   ["ORD-5026", "Riya Thomas", "Wall Mounted Shelf", "Home Delivery", "Pending"],
-  ["ORD-5027", "Mihir Saxena", "Entryway Bench", "Express Delivery", "Delivered"],
-  ["ORD-5028", "Leela Pillai", "Executive Office Desk", "Home Delivery", "Processing"],
+  [
+    "ORD-5027",
+    "Mihir Saxena",
+    "Entryway Bench",
+    "Express Delivery",
+    "Delivered",
+  ],
+  [
+    "ORD-5028",
+    "Leela Pillai",
+    "Executive Office Desk",
+    "Home Delivery",
+    "Processing",
+  ],
   ["ORD-5029", "Kunal Anand", "Classic Armchair", "Store Pickup", "Delivered"],
-  ["ORD-5030", "Pihu Agarwal", "Minimal Nesting Table", "Home Delivery", "Cancelled"],
+  [
+    "ORD-5030",
+    "Pihu Agarwal",
+    "Minimal Nesting Table",
+    "Home Delivery",
+    "Cancelled",
+  ],
 ].map(([orderId, personName, productName, deliveryMode, status], index) => ({
   srNo: index + 1,
   orderId,
@@ -99,7 +214,57 @@ const orderRows = [
   status,
 }));
 
-export const useOrderPaymentStore = create(() => ({
-  paymentRows,
-  orderRows,
-}));
+export const useOrderPaymentStore = create(
+  persist(
+    (set) => ({
+      paymentRows,
+      orderRows,
+
+      markPaymentPaid: (productId) =>
+        set((state) => ({
+          paymentRows: state.paymentRows.map((row) =>
+            row.productId === productId
+              ? {
+                  ...row,
+                  paymentStatus: "Paid",
+                  pendingAmount: 0,
+                }
+              : row,
+          ),
+        })),
+
+      markPaymentPending: (productId) =>
+        set((state) => ({
+          paymentRows: state.paymentRows.map((row) =>
+            row.productId === productId
+              ? {
+                  ...row,
+                  paymentStatus: "Pending",
+                  pendingAmount: row.amount,
+                }
+              : row,
+          ),
+        })),
+
+      markOrderDelivered: (orderId) =>
+        set((state) => ({
+          orderRows: state.orderRows.map((row) =>
+            row.orderId === orderId
+              ? {
+                  ...row,
+                  status: "Delivered",
+                }
+              : row,
+          ),
+        })),
+    }),
+
+    {
+      name: "furna-order-payment-data",
+      partialize: (state) => ({
+        paymentRows: state.paymentRows,
+        orderRows: state.orderRows,
+      }),
+    },
+  ),
+);

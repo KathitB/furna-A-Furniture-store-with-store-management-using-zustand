@@ -6,24 +6,25 @@ import PageShell from "./PageShell";
 import styles from "./Banners.module.scss";
 
 const bannerRows = [
-  [storeBanner, "Summer Furniture Sale", "Ahmedabad"],
-  [heroBanner, "Premium Sofa Collection", "Surat"],
-  [backgroundBanner, "Bedroom Makeover Week", "Vadodara"],
-  [storeBanner, "Dining Festive Offers", "Rajkot"],
-  [heroBanner, "Office Comfort Deals", "Mumbai"],
-  [backgroundBanner, "Outdoor Living Specials", "Pune"],
-  [storeBanner, "Storage Essentials", "Delhi"],
-  [heroBanner, "Luxury Home Collection", "Bengaluru"],
-  [backgroundBanner, "Compact Home Picks", "Hyderabad"],
-  [storeBanner, "Weekend Recliner Deals", "Chennai"],
-  [heroBanner, "Modern Decor Launch", "Jaipur"],
-  [backgroundBanner, "Mattress Upgrade Offer", "Kolkata"],
-].map(([banner, title, branch], index) => ({
+  [storeBanner, "Summer Furniture Sale", "Ahmedabad", "Active"],
+  [heroBanner, "Premium Sofa Collection", "Surat", "Active"],
+  [backgroundBanner, "Bedroom Makeover Week", "Vadodara", "Inactive"],
+  [storeBanner, "Dining Festive Offers", "Rajkot", "Active"],
+  [heroBanner, "Office Comfort Deals", "Mumbai", "Active"],
+  [backgroundBanner, "Outdoor Living Specials", "Pune", "Inactive"],
+  [storeBanner, "Storage Essentials", "Delhi", "Active"],
+  [heroBanner, "Luxury Home Collection", "Bengaluru", "Active"],
+  [backgroundBanner, "Compact Home Picks", "Hyderabad", "Inactive"],
+  [storeBanner, "Weekend Recliner Deals", "Chennai", "Active"],
+  [heroBanner, "Modern Decor Launch", "Jaipur", "Active"],
+  [backgroundBanner, "Mattress Upgrade Offer", "Kolkata", "Inactive"],
+].map(([banner, title, branch, status], index) => ({
   srNo: index + 1,
   // bannerId: `BNR-${String(index + 1).padStart(3, "0")}`,
   banner,
   title,
   branch,
+  status,
 }));
 
 const pageSizeOptions = [10, 20, 30];
@@ -81,6 +82,7 @@ export default function Banners({ user }) {
                 <th>Banner</th>
                 <th>Title</th>
                 <th>Branch</th>
+                <th>Banner Status</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +99,15 @@ export default function Banners({ user }) {
                   </td>
                   <td>{row.title}</td>
                   <td>{row.branch}</td>
+                  <td>
+                    <span
+                      className={`${styles.status} ${
+                        row.status === "Inactive" ? styles.statusInactive : ""
+                      }`}
+                    >
+                      {row.status}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

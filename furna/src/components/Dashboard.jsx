@@ -27,7 +27,7 @@ const pagePaths = {
 };
 
 const getPageFromPath = () => {
-  const page = window.location.pathname.replace("/", "") || "dashboard";
+  const page = window.location.pathname.split("/")[1] || "dashboard";
   return pages[page] ? page : "dashboard";
 };
 

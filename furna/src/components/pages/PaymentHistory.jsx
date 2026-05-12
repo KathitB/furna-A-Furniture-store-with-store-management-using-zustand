@@ -14,6 +14,12 @@ const formatCurrency = (value) =>
 
 export default function PaymentHistory({ user }) {
   const paymentRows = useOrderPaymentStore((state) => state.paymentRows);
+  const markPaymentPaid = useOrderPaymentStore(
+    (state) => state.markPaymentPaid,
+  );
+  const markPaymentPending = useOrderPaymentStore(
+    (state) => state.markPaymentPending,
+  );
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(paymentRows.length / pageSize);
@@ -71,6 +77,7 @@ export default function PaymentHistory({ user }) {
                 <th>Total Amount</th>
                 <th>Payment Status</th>
                 <th>Pending Amount</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -98,6 +105,25 @@ export default function PaymentHistory({ user }) {
                     </span>
                   </td>
                   <td>{formatCurrency(row.pendingAmount)}</td>
+                  <td className={styles.actionstatus}>
+                    <button
+                      type="button"
+                      className={styles.actionButton}
+                      onClick={() => markPaymentPaid(row.productId)}
+                      disabled={row.paymentStatus === "Paid"}
+                    >
+                      Mark Paid
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.actionButton2}
+                      onClick={() => markPaymentPending(row.productId)}
+                      disabled={row.paymentStatus === "Pending"}
+                    >
+                      Mark Pending
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -7,6 +7,9 @@ const pageSizeOptions = [10, 20, 30];
 
 export default function Orders({ user }) {
   const orderRows = useOrderPaymentStore((state) => state.orderRows);
+  const markOrderDelivered = useOrderPaymentStore(
+    (state) => state.markOrderDelivered,
+  );
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(orderRows.length / pageSize);
@@ -60,6 +63,7 @@ export default function Orders({ user }) {
                 <th>Order Product Name</th>
                 <th>Mode of Delivery</th>
                 <th>Order Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -72,6 +76,16 @@ export default function Orders({ user }) {
                   <td>{row.deliveryMode}</td>
                   <td>
                     <span className={styles.status}>{row.status}</span>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className={styles.actionButton}
+                      onClick={() => markOrderDelivered(row.orderId)}
+                      disabled={row.status === "Delivered"}
+                    >
+                      Mark Delivered
+                    </button>
                   </td>
                 </tr>
               ))}

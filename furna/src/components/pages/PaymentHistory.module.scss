@@ -61,7 +61,7 @@
 
 .dataTable {
   width: 100%;
-  min-width: 1220px;
+  min-width: 1340px;
   border-collapse: collapse;
 
   th,
@@ -94,27 +94,81 @@
   }
 }
 
+.dataTable th:nth-last-child(2),
+.dataTable td:nth-last-child(2) {
+  min-width: 150px;
+  padding-right: 24px;
+}
+
+.dataTable th:last-child,
+.dataTable td:last-child {
+  min-width: 170px;
+  padding-left: 24px;
+}
+
 .status {
   display: inline-flex;
   min-width: 82px;
   justify-content: center;
   border-radius: 999px;
-  // background: #fff3d8; 
+  background: #fff3d8;
   padding: 7px 10px;
-  // color: #a86600;
+  color: #a86600;
   font-size: 12px;
   font-weight: 800;
 }
 
-// .statusPaid {
-//   background: #ecf9ee;
-//   color: #3f9d28;
-// }
+.statusPaid {
+  background: #ecf9ee;
+  color: #3f9d28;
+}
 
-// .statusPartial {
-//   background: #eaf2ff;
-//   color: #3473ba;
-// }
+.statusPartial {
+  background: #eaf2ff;
+  color: #3473ba;
+}
+
+.actionstatus {
+  gap: 50px;
+}
+
+.actionButton {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(90, 189, 60, 0.32);
+  border-radius: 8px;
+  background: #ecf9ee;
+  color: #3f9d28;
+  cursor: pointer;
+  margin: 6px 0 6px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.actionButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.actionButton2 {
+  min-height: 34px;
+  border: 1px solid rgba(90, 189, 60, 0.32);
+  border-radius: 8px;
+  background: #d6d3d2;
+  color: #e24b4b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.actionButton2:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
 
 .paginationBar {
   display: flex;

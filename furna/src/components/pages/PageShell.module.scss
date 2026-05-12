@@ -24,6 +24,20 @@
   font-weight: 700;
 }
 
+.backButton {
+  min-height: 36px;
+  margin-top: 12px;
+  border: 1px solid rgba(90, 189, 60, 0.32);
+  border-radius: 8px;
+  background: #ecf9ee;
+  color: #3f9d28;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 14px;
+}
+
 .userBadge {
   min-width: 108px;
   border-radius: 999px;
