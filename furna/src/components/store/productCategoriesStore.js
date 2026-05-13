@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { apiRequest } from "../../api/api";
 
 const productImages = {
   sofas:
@@ -399,109 +400,182 @@ export const useProductCategoriesStore = create(
     (set) => ({
       categories: categoryRows,
 
-      addCategory: ({ categoryName, status }) =>
-        set((state) => {
-          const nextCategory = {
-            categoryId: getNextId(
-              "CAT",
-              state.categories.map((category) => category.categoryId),
-            ),
-            categoryName: categoryName.trim(),
-            status,
-            updatedAt: getTodayLabel(),
-            products: [],
-          };
+      fetchCategories: async () => {
+        const categories = await apiRequest("/categories");
+        set({ categories: normalizeCategories(categories) });
+      },
 
-          return {
+      addCategory: async ({ categoryName, status }) => {
+        try {
+          const nextCategory = await apiRequest("/categories", {
+            method: "POST",
+            body: JSON.stringify({ categoryName, status }),
+          });
+
+          set((state) => ({
             categories: normalizeCategories([...state.categories, nextCategory]),
-          };
-        }),
+          }));
+        } catch {
+          set((state) => {
+            const nextCategory = {
+              categoryId: getNextId(
+                "CAT",
+                state.categories.map((category) => category.categoryId),
+              ),
+              categoryName: categoryName.trim(),
+              status,
+              updatedAt: getTodayLabel(),
+              products: [],
+            };
 
-      addProduct: (categoryId, product) =>
-        set((state) => ({
-          categories: normalizeCategories(
-            state.categories.map((category) => {
-              if (category.categoryId !== categoryId) {
-                return category;
-              }
+            return {
+              categories: normalizeCategories([...state.categories, nextCategory]),
+            };
+          });
+        }
+      },
 
-              const existingProductIds = state.categories.flatMap((row) =>
-                row.products.map((item) => item.productId),
-              );
-              const productId = getNextId("PRD", existingProductIds);
-              const price = normalizePrice(product.price);
-              const stock = normalizeStock(product.stock);
-              const productName = product.productName.trim();
+      addProduct: async (categoryId, product) => {
+        try {
+          const nextProduct = await apiRequest(`/categories/${categoryId}/products`, {
+            method: "POST",
+            body: JSON.stringify(product),
+          });
 
-              return {
-                ...category,
-                updatedAt: getTodayLabel(),
-                products: [
-                  ...category.products,
-                  {
-                    productId,
-                    productName,
-                    image: product.image.trim() || defaultProductImage,
-                    price,
-                    stock,
-                    productTypes: [
-                      {
-                        productId: `${productId}-01`,
-                        productName,
-                        typeOfProduct: product.typeOfProduct.trim(),
-                        brand: product.brand.trim() || "Furna Living",
-                        price,
-                        discount: product.discount.trim() || "0%",
-                        warranty: product.warranty.trim() || "1 Year",
-                      },
-                    ],
-                  },
-                ],
-              };
-            }),
-          ),
-        })),
+          set((state) => ({
+            categories: normalizeCategories(
+              state.categories.map((category) =>
+                category.categoryId === categoryId
+                  ? {
+                      ...category,
+                      updatedAt: getTodayLabel(),
+                      products: [...category.products, nextProduct],
+                    }
+                  : category,
+              ),
+            ),
+          }));
+        } catch {
+          set((state) => ({
+            categories: normalizeCategories(
+              state.categories.map((category) => {
+                if (category.categoryId !== categoryId) {
+                  return category;
+                }
 
-      addProductType: (categoryId, productId, productType) =>
-        set((state) => ({
-          categories: normalizeCategories(
-            state.categories.map((category) => {
-              if (category.categoryId !== categoryId) {
-                return category;
-              }
+                const existingProductIds = state.categories.flatMap((row) =>
+                  row.products.map((item) => item.productId),
+                );
+                const productId = getNextId("PRD", existingProductIds);
+                const price = normalizePrice(product.price);
+                const stock = normalizeStock(product.stock);
+                const productName = product.productName.trim();
 
-              return {
-                ...category,
-                updatedAt: getTodayLabel(),
-                products: category.products.map((product) => {
-                  if (product.productId !== productId) {
-                    return product;
-                  }
+                return {
+                  ...category,
+                  updatedAt: getTodayLabel(),
+                  products: [
+                    ...category.products,
+                    {
+                      productId,
+                      productName,
+                      image: product.image.trim() || defaultProductImage,
+                      price,
+                      stock,
+                      productTypes: [
+                        {
+                          productId: `${productId}-01`,
+                          productName,
+                          typeOfProduct: product.typeOfProduct.trim(),
+                          brand: product.brand.trim() || "Furna Living",
+                          price,
+                          discount: product.discount.trim() || "0%",
+                          warranty: product.warranty.trim() || "1 Year",
+                        },
+                      ],
+                    },
+                  ],
+                };
+              }),
+            ),
+          }));
+        }
+      },
 
-                  const typeId = `${product.productId}-${String(
-                    product.productTypes.length + 1,
-                  ).padStart(2, "0")}`;
+      addProductType: async (categoryId, productId, productType) => {
+        try {
+          const nextType = await apiRequest(
+            `/categories/${categoryId}/products/${productId}/types`,
+            {
+              method: "POST",
+              body: JSON.stringify(productType),
+            },
+          );
 
-                  return {
-                    ...product,
-                    productTypes: [
-                      ...product.productTypes,
-                      {
-                        productId: typeId,
-                        productName: product.productName,
-                        typeOfProduct: productType.typeOfProduct.trim(),
-                        brand: productType.brand.trim() || "Furna Living",
-                        price: normalizePrice(productType.price),
-                        discount: productType.discount.trim() || "0%",
-                        warranty: productType.warranty.trim() || "1 Year",
-                      },
-                    ],
-                  };
-                }),
-              };
-            }),
-          ),
-        })),
+          set((state) => ({
+            categories: normalizeCategories(
+              state.categories.map((category) => {
+                if (category.categoryId !== categoryId) {
+                  return category;
+                }
+
+                return {
+                  ...category,
+                  updatedAt: getTodayLabel(),
+                  products: category.products.map((product) =>
+                    product.productId === productId
+                      ? {
+                          ...product,
+                          productTypes: [...product.productTypes, nextType],
+                        }
+                      : product,
+                  ),
+                };
+              }),
+            ),
+          }));
+        } catch {
+          set((state) => ({
+            categories: normalizeCategories(
+              state.categories.map((category) => {
+                if (category.categoryId !== categoryId) {
+                  return category;
+                }
+
+                return {
+                  ...category,
+                  updatedAt: getTodayLabel(),
+                  products: category.products.map((product) => {
+                    if (product.productId !== productId) {
+                      return product;
+                    }
+
+                    const typeId = `${product.productId}-${String(
+                      product.productTypes.length + 1,
+                    ).padStart(2, "0")}`;
+
+                    return {
+                      ...product,
+                      productTypes: [
+                        ...product.productTypes,
+                        {
+                          productId: typeId,
+                          productName: product.productName,
+                          typeOfProduct: productType.typeOfProduct.trim(),
+                          brand: productType.brand.trim() || "Furna Living",
+                          price: normalizePrice(productType.price),
+                          discount: productType.discount.trim() || "0%",
+                          warranty: productType.warranty.trim() || "1 Year",
+                        },
+                      ],
+                    };
+                  }),
+                };
+              }),
+            ),
+          }));
+        }
+      },
     }),
     {
       name: "furna-product-categories-data",

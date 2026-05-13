@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { apiRequest } from "../../api/api";
 
 const paymentRows = [
   ["FRN-1001", "Oak Lounge Sofa", 1, 42999, 2500, "UPI"],
@@ -220,43 +221,94 @@ export const useOrderPaymentStore = create(
       paymentRows,
       orderRows,
 
-      markPaymentPaid: (productId) =>
-        set((state) => ({
-          paymentRows: state.paymentRows.map((row) =>
-            row.productId === productId
-              ? {
-                  ...row,
-                  paymentStatus: "Paid",
-                  pendingAmount: 0,
-                }
-              : row,
-          ),
-        })),
+      fetchOrderPayments: async () => {
+        const [payments, orders] = await Promise.all([
+          apiRequest("/payments"),
+          apiRequest("/orders"),
+        ]);
 
-      markPaymentPending: (productId) =>
-        set((state) => ({
-          paymentRows: state.paymentRows.map((row) =>
-            row.productId === productId
-              ? {
-                  ...row,
-                  paymentStatus: "Pending",
-                  pendingAmount: row.amount,
-                }
-              : row,
-          ),
-        })),
+        set({ paymentRows: payments, orderRows: orders });
+      },
 
-      markOrderDelivered: (orderId) =>
-        set((state) => ({
-          orderRows: state.orderRows.map((row) =>
-            row.orderId === orderId
-              ? {
-                  ...row,
-                  status: "Delivered",
-                }
-              : row,
-          ),
-        })),
+      markPaymentPaid: async (productId) => {
+        try {
+          const updatedPayment = await apiRequest(`/payments/${productId}/paid`, {
+            method: "PATCH",
+          });
+
+          set((state) => ({
+            paymentRows: state.paymentRows.map((row) =>
+              row.productId === productId ? updatedPayment : row,
+            ),
+          }));
+        } catch {
+          set((state) => ({
+            paymentRows: state.paymentRows.map((row) =>
+              row.productId === productId
+                ? {
+                    ...row,
+                    paymentStatus: "Paid",
+                    pendingAmount: 0,
+                  }
+                : row,
+            ),
+          }));
+        }
+      },
+
+      markPaymentPending: async (productId) => {
+        try {
+          const updatedPayment = await apiRequest(
+            `/payments/${productId}/pending`,
+            {
+              method: "PATCH",
+            },
+          );
+
+          set((state) => ({
+            paymentRows: state.paymentRows.map((row) =>
+              row.productId === productId ? updatedPayment : row,
+            ),
+          }));
+        } catch {
+          set((state) => ({
+            paymentRows: state.paymentRows.map((row) =>
+              row.productId === productId
+                ? {
+                    ...row,
+                    paymentStatus: "Pending",
+                    pendingAmount: row.amount,
+                  }
+                : row,
+            ),
+          }));
+        }
+      },
+
+      markOrderDelivered: async (orderId) => {
+        try {
+          const updatedOrder = await apiRequest(`/orders/${orderId}/delivered`, {
+            method: "PATCH",
+          });
+
+          set((state) => ({
+            orderRows: state.orderRows.map((row) =>
+              row.orderId === orderId ? updatedOrder : row,
+            ),
+          }));
+        } catch {
+          set((state) => ({
+            orderRows: state.orderRows.map((row) =>
+              row.orderId === orderId
+                ? {
+                    ...row,
+                    status: "Delivered",
+                  }
+                : row,
+            ),
+          }));
+        }
+      },
     }),
 
     {

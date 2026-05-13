@@ -6,7 +6,9 @@ import eyeClose from "../assets/eye-close.svg";
 import { useAuthsStore } from "./store/authStore";
 
 export default function LoginPage() {
-  const login = useAuthsStore((state) => state.login);
+  const loginWithCredentials = useAuthsStore(
+    (state) => state.loginWithCredentials,
+  );
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,7 +29,7 @@ export default function LoginPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const nextErrors = {};
@@ -52,17 +54,14 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(true);
-    window.setTimeout(() => {
-      const user = {
-        email: emailValue,
-        name: emailValue.split("@")[0] || "Furna Admin",
-      };
-      const token = `furna-demo-${Date.now()}`;
-
+    try {
+      await loginWithCredentials(emailValue, form.password);
       setMessage("Welcome back to Furna.");
+    } catch (error) {
+      setMessage(error.message || "Unable to log in. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      login(user, token);
-    }, 500);
+    }
   };
 
   return (

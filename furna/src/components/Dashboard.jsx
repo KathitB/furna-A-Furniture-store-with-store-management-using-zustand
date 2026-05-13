@@ -7,6 +7,9 @@ import Orders from "./pages/Orders";
 import PaymentHistory from "./pages/PaymentHistory";
 import SideBar from "./SideBar";
 import styles from "./dashboard.module.scss";
+import { useBannerStore } from "./store/bannerStore";
+import { useOrderPaymentStore } from "./store/orderPaymentStore";
+import { useProductCategoriesStore } from "./store/productCategoriesStore";
 
 const pages = {
   dashboard: DashboardHome,
@@ -33,10 +36,25 @@ const getPageFromPath = () => {
 
 export default function Dashboard({ user, onLogout }) {
   const [activePage, setActivePage] = useState(getPageFromPath);
+  const fetchBanners = useBannerStore((state) => state.fetchBanners);
+  const fetchCategories = useProductCategoriesStore(
+    (state) => state.fetchCategories,
+  );
+  const fetchOrderPayments = useOrderPaymentStore(
+    (state) => state.fetchOrderPayments,
+  );
   const ActivePage = useMemo(
     () => pages[activePage] ?? DashboardHome,
     [activePage],
   );
+
+  useEffect(() => {
+    Promise.allSettled([
+      fetchBanners(),
+      fetchCategories(),
+      fetchOrderPayments(),
+    ]);
+  }, [fetchBanners, fetchCategories, fetchOrderPayments]);
 
   useEffect(() => {
     const handlePopState = () => {

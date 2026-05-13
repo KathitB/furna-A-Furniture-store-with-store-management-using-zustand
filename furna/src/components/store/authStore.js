@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { apiRequest } from "../../api/api";
 
 const initialState = {
   user: null,
@@ -21,6 +22,30 @@ export const useAuthsStore = create(
           isAuthenticated: true,
           sessionExpired: false,
         }),
+
+      loginWithCredentials: async (email, password) => {
+        set({ isLoading: true });
+
+        try {
+          const { user, token } = await apiRequest("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+          });
+
+          set({
+            user,
+            token,
+            isAuthenticated: true,
+            sessionExpired: false,
+            isLoading: false,
+          });
+
+          return { user, token };
+        } catch (error) {
+          set({ isLoading: false });
+          throw error;
+        }
+      },
 
       logout: () => set({ ...initialState }),
       setSessionExpired: (val) => set({ sessionExpired: val }),

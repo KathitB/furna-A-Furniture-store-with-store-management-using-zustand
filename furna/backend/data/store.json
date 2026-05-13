@@ -1,0 +1,392 @@
+{
+  "banners": [
+    {
+      "bannerId": "BNR-001",
+      "banner": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=80",
+      "title": "Summer Furniture Sale",
+      "branch": "Ahmedabad",
+      "status": "Active",
+      "srNo": 1
+    },
+    {
+      "bannerId": "BNR-002",
+      "banner": "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=80",
+      "title": "Premium Sofa Collection",
+      "branch": "Surat",
+      "status": "Active",
+      "srNo": 2
+    },
+    {
+      "bannerId": "BNR-003",
+      "banner": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+      "title": "Bedroom Makeover Week",
+      "branch": "Vadodara",
+      "status": "Inactive",
+      "srNo": 3
+    }
+  ],
+  "categories": [
+    {
+      "categoryId": "CAT-001",
+      "categoryName": "Living Room",
+      "status": "Active",
+      "updatedAt": "12 Apr 2026",
+      "products": [
+        {
+          "productId": "PRD-001",
+          "productName": "Sofas",
+          "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=80",
+          "price": 42999,
+          "stock": 18,
+          "productTypes": [
+            {
+              "productId": "PRD-001-01",
+              "productName": "Sofas",
+              "typeOfProduct": "L Shape Sectional",
+              "brand": "Furna Living",
+              "price": 42999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-001-02",
+              "productName": "Sofas",
+              "typeOfProduct": "Three Seater Sofa",
+              "brand": "Urban Oak",
+              "price": 46499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-001-03",
+              "productName": "Sofas",
+              "typeOfProduct": "Sofa Cum Bed",
+              "brand": "CasaWood",
+              "price": 49999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        },
+        {
+          "productId": "PRD-002",
+          "productName": "Recliners",
+          "image": "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=900&q=80",
+          "price": 34999,
+          "stock": 9,
+          "productTypes": [
+            {
+              "productId": "PRD-002-01",
+              "productName": "Recliners",
+              "typeOfProduct": "Manual Recliner",
+              "brand": "Furna Living",
+              "price": 34999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-002-02",
+              "productName": "Recliners",
+              "typeOfProduct": "Motorized Recliner",
+              "brand": "Urban Oak",
+              "price": 38499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-002-03",
+              "productName": "Recliners",
+              "typeOfProduct": "Rocking Recliner",
+              "brand": "CasaWood",
+              "price": 41999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        }
+      ],
+      "srNo": 1,
+      "productCount": 27,
+      "productNames": [
+        "Sofas",
+        "Recliners"
+      ]
+    },
+    {
+      "categoryId": "CAT-002",
+      "categoryName": "Bedroom",
+      "status": "Active",
+      "updatedAt": "10 Apr 2026",
+      "products": [
+        {
+          "productId": "PRD-003",
+          "productName": "Beds",
+          "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+          "price": 55999,
+          "stock": 16,
+          "productTypes": [
+            {
+              "productId": "PRD-003-01",
+              "productName": "Beds",
+              "typeOfProduct": "Queen Storage Bed",
+              "brand": "Furna Living",
+              "price": 55999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-003-02",
+              "productName": "Beds",
+              "typeOfProduct": "King Hydraulic Bed",
+              "brand": "Urban Oak",
+              "price": 59499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-003-03",
+              "productName": "Beds",
+              "typeOfProduct": "Platform Bed",
+              "brand": "CasaWood",
+              "price": 62999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        },
+        {
+          "productId": "PRD-004",
+          "productName": "Wardrobes",
+          "image": "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=900&q=80",
+          "price": 61999,
+          "stock": 11,
+          "productTypes": [
+            {
+              "productId": "PRD-004-01",
+              "productName": "Wardrobes",
+              "typeOfProduct": "Two Door Wardrobe",
+              "brand": "Furna Living",
+              "price": 61999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-004-02",
+              "productName": "Wardrobes",
+              "typeOfProduct": "Sliding Wardrobe",
+              "brand": "Urban Oak",
+              "price": 65499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-004-03",
+              "productName": "Wardrobes",
+              "typeOfProduct": "Four Door Wardrobe",
+              "brand": "CasaWood",
+              "price": 68999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        }
+      ],
+      "srNo": 2,
+      "productCount": 27,
+      "productNames": [
+        "Beds",
+        "Wardrobes"
+      ]
+    },
+    {
+      "categoryId": "CAT-003",
+      "categoryName": "Dining",
+      "status": "Active",
+      "updatedAt": "08 Apr 2026",
+      "products": [
+        {
+          "productId": "PRD-005",
+          "productName": "Dining Tables",
+          "image": "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=900&q=80",
+          "price": 24999,
+          "stock": 8,
+          "productTypes": [
+            {
+              "productId": "PRD-005-01",
+              "productName": "Dining Tables",
+              "typeOfProduct": "Four Seater Table",
+              "brand": "Furna Living",
+              "price": 24999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-005-02",
+              "productName": "Dining Tables",
+              "typeOfProduct": "Six Seater Table",
+              "brand": "Urban Oak",
+              "price": 28499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-005-03",
+              "productName": "Dining Tables",
+              "typeOfProduct": "Marble Dining Set",
+              "brand": "CasaWood",
+              "price": 31999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        },
+        {
+          "productId": "PRD-006",
+          "productName": "Chairs",
+          "image": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80",
+          "price": 6999,
+          "stock": 28,
+          "productTypes": [
+            {
+              "productId": "PRD-006-01",
+              "productName": "Chairs",
+              "typeOfProduct": "Upholstered Chair",
+              "brand": "Furna Living",
+              "price": 6999,
+              "discount": "8%",
+              "warranty": "1 Year"
+            },
+            {
+              "productId": "PRD-006-02",
+              "productName": "Chairs",
+              "typeOfProduct": "Wooden Chair",
+              "brand": "Urban Oak",
+              "price": 10499,
+              "discount": "10%",
+              "warranty": "2 Years"
+            },
+            {
+              "productId": "PRD-006-03",
+              "productName": "Chairs",
+              "typeOfProduct": "Foldable Dining Chair",
+              "brand": "CasaWood",
+              "price": 13999,
+              "discount": "12%",
+              "warranty": "3 Years"
+            }
+          ]
+        }
+      ],
+      "srNo": 3,
+      "productCount": 36,
+      "productNames": [
+        "Dining Tables",
+        "Chairs"
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "ORD-5001",
+      "personName": "Aarav Mehta",
+      "productName": "Oak Lounge Sofa",
+      "deliveryMode": "Home Delivery",
+      "status": "Pending",
+      "srNo": 1
+    },
+    {
+      "orderId": "ORD-5002",
+      "personName": "Isha Sharma",
+      "productName": "Walnut Coffee Table",
+      "deliveryMode": "Store Pickup",
+      "status": "Delivered",
+      "srNo": 2
+    },
+    {
+      "orderId": "ORD-5003",
+      "personName": "Kabir Singh",
+      "productName": "Queen Storage Bed",
+      "deliveryMode": "Home Delivery",
+      "status": "In Transit",
+      "srNo": 3
+    },
+    {
+      "orderId": "ORD-5004",
+      "personName": "Meera Nair",
+      "productName": "Ergo Study Chair",
+      "deliveryMode": "Express Delivery",
+      "status": "Processing",
+      "srNo": 4
+    },
+    {
+      "orderId": "ORD-5005",
+      "personName": "Rohan Patel",
+      "productName": "Marble Dining Set",
+      "deliveryMode": "Home Delivery",
+      "status": "Delivered",
+      "srNo": 5
+    }
+  ],
+  "payments": [
+    {
+      "productId": "FRN-1001",
+      "productName": "Oak Lounge Sofa",
+      "quantity": 1,
+      "amount": 42999,
+      "discount": 2500,
+      "paymentMode": "UPI",
+      "totalAmount": 40499,
+      "paymentStatus": "Pending",
+      "pendingAmount": 40499,
+      "srNo": 1
+    },
+    {
+      "productId": "FRN-1002",
+      "productName": "Walnut Coffee Table",
+      "quantity": 2,
+      "amount": 15998,
+      "discount": 1200,
+      "paymentMode": "Credit Card",
+      "totalAmount": 14798,
+      "paymentStatus": "Paid",
+      "pendingAmount": 0,
+      "srNo": 2
+    },
+    {
+      "productId": "FRN-1003",
+      "productName": "Queen Storage Bed",
+      "quantity": 1,
+      "amount": 55999,
+      "discount": 4000,
+      "paymentMode": "Net Banking",
+      "totalAmount": 51999,
+      "paymentStatus": "Paid",
+      "pendingAmount": 0,
+      "srNo": 3
+    },
+    {
+      "productId": "FRN-1004",
+      "productName": "Ergo Study Chair",
+      "quantity": 3,
+      "amount": 23997,
+      "discount": 1800,
+      "paymentMode": "Debit Card",
+      "totalAmount": 22197,
+      "paymentStatus": "Pending",
+      "pendingAmount": 22197,
+      "srNo": 4
+    },
+    {
+      "productId": "FRN-1005",
+      "productName": "Marble Dining Set",
+      "quantity": 1,
+      "amount": 78999,
+      "discount": 6500,
+      "paymentMode": "UPI",
+      "totalAmount": 72499,
+      "paymentStatus": "Paid",
+      "pendingAmount": 0,
+      "srNo": 5
+    }
+  ]
+}

@@ -78,7 +78,7 @@ export default function Categories({ user }) {
   const startIndex = (currentPage - 1) * pageSize;
   const visibleRows = useMemo(
     () => categoryRows.slice(startIndex, startIndex + pageSize),
-    [pageSize, startIndex],
+    [categoryRows, pageSize, startIndex],
   );
 
   const handlePageSizeChange = (event) => {
